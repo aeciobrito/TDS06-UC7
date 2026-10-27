@@ -1,0 +1,6 @@
+@Hospedagem.API_HostAddress = http://localhost:5145
+
+GET {{Hospedagem.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
