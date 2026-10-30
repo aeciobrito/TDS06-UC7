@@ -8,12 +8,12 @@ namespace Hospedagem.API.Controllers
     [ApiController]
     public class FormasPagamentoController : ControllerBase
     {
-        List<FormaPagamento> _formasPagamento = new()
+        static List<FormaPagamento> _formasPagamento = new()
         {
             new FormaPagamento { Id = 1, Nome = "Dinheiro", Ativo = true },
             new FormaPagamento { Id = 2, Nome = "Cartão de Crédito", Ativo = true },
             new FormaPagamento { Id = 3, Nome = "Pix", Ativo = true }
-        };
+        };       
 
         [HttpGet]
         public IActionResult ObterTodos()
@@ -35,8 +35,17 @@ namespace Hospedagem.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(FormaPagamento novaForma)
+        public IActionResult Criar([FromBody] FormaPagamento novaForma)
         {
+            novaForma.Nome = novaForma.Nome.Trim();
+
+            //validar os dados
+            if (novaForma == null || string.IsNullOrWhiteSpace(novaForma.Nome))
+            {
+                return BadRequest();
+            }
+
+            // salva na lista
             _formasPagamento.Add(novaForma);
             return Created();
         }
