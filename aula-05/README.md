@@ -122,3 +122,13 @@ Execute no terminal:
 dotnet build
 ```
 Certifique-se de que a mensagem `Build succeeded. 0 Error(s)` seja exibida.
+
+
+### Passo 6: Crie Migrations e atualize o banco de dados:
+```bash
+Add-Migration NomeDaMigracao
+```
+
+```bash
+Update-Database
+```
