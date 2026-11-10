@@ -15,14 +15,7 @@ namespace Pousada.API.Controllers
         public ItensController(AppDbContext context)
         {
             _dbContext = context;
-        }
-
-        private static readonly List<Item> _itens = new()
-        {
-            new Item { Id = 1, Nome = "Agua Mineral 500ml", Preco = 5.00m, Descricao = "Agua sem gas"},
-            new Item { Id = 2, Nome = "Refrigerante Lata", Preco = 8.50m, Descricao = "Lata 350ml"},
-            new Item { Id = 3, Nome = "Pacote de Biscoito Artesanal", Preco = 12.00m, Descricao = "Biscoito amanteigado caseiro" }
-        };
+        }        
 
         [HttpGet]
         public IActionResult Get()
@@ -33,7 +26,7 @@ namespace Pousada.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var itemBuscado = _itens.FirstOrDefault(itm => itm.Id == id);
+            var itemBuscado = _dbContext.Itens.FirstOrDefault(itm => itm.Id == id);
 
             if (itemBuscado == null)
             {
@@ -46,7 +39,7 @@ namespace Pousada.API.Controllers
         [HttpGet("porNome/{nome}")]
         public IActionResult GetByNome(string nome)
         {
-            var itemBuscado = _itens.FirstOrDefault(itm => itm.Nome == nome);
+            var itemBuscado = _dbContext.Itens.FirstOrDefault(itm => itm.Nome == nome);
 
             if (itemBuscado == null)
             {
@@ -80,10 +73,12 @@ namespace Pousada.API.Controllers
         [HttpDelete]
         public IActionResult Delete([FromBody] int id)
         {
-            var caputraItemDalista = _itens.FirstOrDefault(x => x.Id == id);
+            var caputraItemDalista = _dbContext.Itens.FirstOrDefault(x => x.Id == id);
 
             if (caputraItemDalista != null)
-                _itens.Remove(caputraItemDalista);
+                _dbContext.Itens.Remove(caputraItemDalista);
+
+            _dbContext.SaveChanges();
 
             return NoContent();
         }
