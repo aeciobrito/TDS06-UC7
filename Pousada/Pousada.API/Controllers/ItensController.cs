@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pousada.API.Data;
 using Pousada.API.Models;
 
 namespace Pousada.API.Controllers
@@ -7,7 +9,13 @@ namespace Pousada.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ItensController : ControllerBase
-    {    
+    {
+        AppDbContext _dbContext;
+
+        public ItensController(AppDbContext context)
+        {
+            _dbContext = context;
+        }
 
         private static readonly List<Item> _itens = new()
         {
@@ -19,7 +27,7 @@ namespace Pousada.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_itens);
+            return Ok(_dbContext.Itens);
         }
 
         [HttpGet("{id}")]
@@ -61,7 +69,9 @@ namespace Pousada.API.Controllers
                 return BadRequest("De graça nem injeção na testa.");
             }
 
-            _itens.Add(novoItem);            
+            //_itens.Add(novoItem);
+            _dbContext.Itens.Add(novoItem);
+            _dbContext.SaveChanges();
 
             return Ok("criado");
         }
