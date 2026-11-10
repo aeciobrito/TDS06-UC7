@@ -21,6 +21,32 @@ namespace Pousada.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Pousada.API.Models.Chale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacidade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Localizacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ValorAltaEstacao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValorBaixaEstacao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chales");
+                });
+
             modelBuilder.Entity("Pousada.API.Models.Item", b =>
                 {
                     b.Property<int>("Id")

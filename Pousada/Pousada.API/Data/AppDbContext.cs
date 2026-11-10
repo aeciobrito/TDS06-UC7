@@ -10,5 +10,6 @@ namespace Pousada.API.Data
         }
 
         public DbSet<Item> Itens { get; set; }
+        public DbSet<Chale> Chales { get; set; }
     }
 }

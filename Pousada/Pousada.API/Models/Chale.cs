@@ -2,10 +2,10 @@
 {
     public class Chale
     {
-        public int Id { get; private set; }
-        public string Localizacao { get; private set; } = string.Empty;
-        public int Capacidade { get; private set; }
-        public decimal ValorAltaEstacao { get; private set; }
-        public decimal ValorBaixaEstacao { get; private set; }
+        public int Id { get; set; }
+        public string Localizacao { get; set; } = string.Empty;
+        public int Capacidade { get; set; }
+        public decimal ValorAltaEstacao { get; set; }
+        public decimal ValorBaixaEstacao { get; set; }
     }
 }
