@@ -22,6 +22,24 @@ namespace Pousada.API.Controllers
             return Ok(_dbContext.Chales);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            if(id < 0)
+            {
+                return BadRequest("Id não pode ser negativo");
+            }
+
+            var result = _dbContext.Chales.FirstOrDefault(itm => itm.Id == id);
+
+            if (result == null)
+            {
+                return NotFound($"Chalé nao localizado para o id {id}.");
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public IActionResult Criar([FromBody] Chale novoChale)
         {
@@ -40,6 +58,19 @@ namespace Pousada.API.Controllers
             _dbContext.SaveChanges();
 
             return Ok("criado");
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] int id)
+        {
+            var result = _dbContext.Chales.FirstOrDefault(x => x.Id == id);
+
+            if (result != null)
+                _dbContext.Chales.Remove(result);
+
+            _dbContext.SaveChanges();
+
+            return NoContent();
         }
     }
 }
